@@ -65,7 +65,6 @@ namespace DistributedChannel
                 }
 
                 //TODO: Put breakpoint here to inspec the string returned by the connected client
-                Console.WriteLine(ack);
                 _ = ack;
                 
 

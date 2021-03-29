@@ -21,7 +21,7 @@ namespace DistributedChannel.Internals
         protected BindingAddress AdvertisedAddress { get; }
         protected int MaxConcurrentClientsPerThread { get; }
         protected TcpListener Listener { get; }
-        
+
         public virtual bool StopRequested
         {
             get => _stopRequested;
@@ -98,11 +98,11 @@ namespace DistributedChannel.Internals
         private void HandleConcurrentClients()
         {
             var i = Task.WaitAny(_concurrentClients.ToArray(), AwaiterTimeoutMs);
-
-            if (i <= 0) return;
-
+            
+            if (i < 0) return;
+            
             _concurrentClients.RemoveAt(i);
-            WriteLog($"Client disconnected from Task {i}");
+            WriteLog($"Client disconnected, Recycling thread index {i}");
         }
 
         private void WriteLog(string message)
